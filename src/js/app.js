@@ -30,22 +30,59 @@ function render(variables = {}) {
   if (variables.includeCover == false) cover = "<div class='cover'></div>";
 
   // reset the website body with the new html output
-  document.querySelector("#widget_content").innerHTML = `<div class="widget">
-            ${cover}
-          <img src="${variables.avatarURL}" class="photo" />
-          <h1>Lucy Boilett</h1>
-          <h2>Web Developer</h2>
-          <h3>Miami, USA</h3>
-          <ul class="position-right">
-            <li><a href="https://twitter.com/4geeksacademy"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="https://github.com/4geeksacademy"><i class="fab fa-github"></i></a></li>
-            <li><a href="https://linkedin.com/school/4geeksacademy"><i class="fab fa-linkedin"></i></a></li>
-            <li><a href="https://instagram.com/4geeksacademy"><i class="fab fa-instagram"></i></a></li>
-          </ul>
-        </div>
-    `;
-}
+  const avatarHTML = variables.avatarURL
+    ? `<img src="${variables.avatarURL}" class="photo" />`
+    : '<img src="default-avatar-url.jpg" class="photo" />';
 
+  const nameHTML =
+    variables.name || variables.lastName
+      ? `<h1>${variables.name || ""} ${variables.lastName || ""}</h1>`
+      : "<h1>Jhon Doe</h1>";
+
+  const roleHTML = variables.role
+    ? `<h2>${variables.role}</h2>`
+    : "<h2>Unknown Role</h2>";
+
+  const locationHTML =
+    variables.country || variables.city
+      ? `<h3>${variables.city || ""}, ${variables.country || ""}</h3>`
+      : "<h3>Unknown Location</h3>";
+
+  const socialMediaHTML = `
+    <ul class="${variables.socialMediaPosition || "position-right"}">
+      ${
+        variables.twitter
+          ? `<li><a href="https://twitter.com/${variables.twitter}"><i class="fab fa-twitter"></i></a></li>`
+          : ""
+      }
+      ${
+        variables.github
+          ? `<li><a href="https://github.com/${variables.github}"><i class="fab fa-github"></i></a></li>`
+          : ""
+      }
+      ${
+        variables.linkedin
+          ? `<li><a href="https://linkedin.com/in/${variables.linkedin}"><i class="fab fa-linkedin"></i></a></li>`
+          : ""
+      }
+      ${
+        variables.instagram
+          ? `<li><a href="https://instagram.com/${variables.instagram}"><i class="fab fa-instagram"></i></a></li>`
+          : ""
+      }
+    </ul>
+  `;
+  document.querySelector("#widget_content").innerHTML = `
+  <div class="widget">
+    ${cover}
+    ${avatarHTML}
+    ${nameHTML}
+    ${roleHTML}
+    ${locationHTML}
+    ${socialMediaHTML}
+  </div>
+`;
+}
 /**
  * Don't change any of the lines below, here is where we do the logic for the dropdowns
  */
